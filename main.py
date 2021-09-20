@@ -2,9 +2,7 @@ import time
 from functools import partial
 
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtCore import QObject
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QToolBar, QWidget, QPushButton, QLineEdit, QInputDialog, \
-    QDialog
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QToolBar, QDialog
 from PyQt5.QtGui import QPixmap
 import sys
 import os
@@ -22,12 +20,14 @@ class Window(QMainWindow):
     def select_degree_of_damage(self):
         """Запуск формы с возможностью выбрать степень повреждения на изображении"""
         self.test = DegreeForm(self)
-        degree = """тут мы каким-то образом получим данные из формы"""
-        return degree
+        while not self.test.data:
+            pass
+        return self.test.data
 
     def move_to_folder(self, folder_name):
         """Получаем степень повреждения. Перемещаем фото в выбранную папку, добавляя степень к его имени"""
         degree = self.select_degree_of_damage()
+        print(degree)
         new_path = work_dir + f'/{folder_name}' + folder_name[0] + degree + self.image_path[
                                                                             self.image_path.rindex('/'):]
         # os.replace(self.image_path, new_path)
@@ -62,6 +62,7 @@ class Window(QMainWindow):
 """Эту НЁХ нам предоставил дизайнер и мы очень хотим её завести но пока не получается"""
 class DegreeForm(object):
     def __init__(self, parent):
+        self.data = None
         form = QDialog(parent)
         self.setupUi(form)
         form.show()
@@ -74,7 +75,7 @@ class DegreeForm(object):
         self.zero_button.setGeometry(QtCore.QRect(10, 20, 85, 33))
         self.zero_button.setStyleSheet("background-color: rgb(0, 255, 0);")
         self.zero_button.setObjectName("zero_button")
-        # self.zero_button.clicked.connect(self.return_data)
+        self.zero_button.clicked.connect(self.return_data)
         self.one_button = QtWidgets.QPushButton(Form)
         self.one_button.setGeometry(QtCore.QRect(110, 20, 85, 33))
         self.one_button.setStyleSheet("background-color: rgb(255, 255, 0);")
@@ -91,8 +92,8 @@ class DegreeForm(object):
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
-        Form.setEnabled(False)
-
+    def return_data(self):
+        self.data = "zero"
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
