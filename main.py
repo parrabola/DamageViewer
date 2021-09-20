@@ -62,7 +62,7 @@ class Window(QMainWindow):
 """Эту НЁХ нам предоставил дизайнер и мы очень хотим её завести но пока не получается"""
 class DegreeForm(object):
     def __init__(self):
-        form = QObject
+        form = QDialog()
         self.setupUi(form)
 
     def setupUi(self, Form):
