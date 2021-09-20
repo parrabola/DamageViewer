@@ -21,7 +21,7 @@ class Window(QMainWindow):
 
     def select_degree_of_damage(self):
         """Запуск формы с возможностью выбрать степень повреждения на изображении"""
-        self.test = DegreeForm()
+        self.test = DegreeForm(self)
         degree = """тут мы каким-то образом получим данные из формы"""
         return degree
 
@@ -61,9 +61,10 @@ class Window(QMainWindow):
 
 """Эту НЁХ нам предоставил дизайнер и мы очень хотим её завести но пока не получается"""
 class DegreeForm(object):
-    def __init__(self):
-        form = QDialog()
+    def __init__(self, parent):
+        form = QDialog(parent)
         self.setupUi(form)
+        form.show()
 
     def setupUi(self, Form):
         Form.setObjectName("Form666")
